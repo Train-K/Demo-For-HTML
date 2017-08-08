@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<style>
+			#box{width: 200px;height: 200px;background: red;position: absolute;cursor: move;}
+		</style>
+		<script>
+			//原生javacript实现拖拽
+			window.onload = function()
+			{
+				var oBox = document.getElementById('box');
+				oBox.onmousedown = function(e)
+				{
+					// alert('ok');
+					var e = window.event || e;
+					var nDisX = e.clientX - oBox.offsetLeft; 
+					var nDisY = e.clientY - oBox.offsetTop; 
+
+					document.onmousemove = function(e)
+					{
+						var left = e.clientX - nDisX;
+						var top = e.clientY - nDisY;
+						if(left < 0)
+						{
+							left=0;
+						}
+						else if(left>document.documentElement.clientWidth-oBox.offsetWidth)
+						{
+							left = document.documentElement.clientWidth-oBox.offsetWidth;
+						}
+
+						if(top<0)
+						{
+							top=0;
+						}
+						else if(top>document.documentElement.clientHeight-oBox.offsetHeight)
+						{
+							top=document.documentElement.clientHeight-oBox.offsetHeight;
+						}
+
+						var e = window.event || e;
+						oBox.style.left = left + 'px';
+						oBox.style.top = top + 'px';
+					}
+
+
+					document.onmouseup = function()
+					{
+						document.onmousemove = null;
+						document.onmouseup = null;
+					}
+
+					return false;  //阻止火狐下空DIV的bug
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box"></div>
+	</body>
+</html>

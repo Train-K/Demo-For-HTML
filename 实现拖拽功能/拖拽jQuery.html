@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<style>
+			*{margin: 0;padding: 0;}
+			.box{width: 200px;height: 200px;background: green;position: absolute;cursor: move;}
+		</style>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<!-- <script src="js/jquery-3.2.1.min.js"></script> -->
+		<script>
+			//jQuery实现拖拽
+			$(function(){
+				var disX = 0;
+				var disY = 0;
+				$('.box').mousedown(function(e){
+
+					disX = e.pageX - $(this).offset().left;
+					disY = e.pageY- $(this).offset().top;
+
+					$(document).mousemove(function(e){
+						var left = e.pageX-disX;
+						var top = e.pageY-disY;
+						if(left<0){
+							left=0;
+						}
+						else if(left>$(window).width()-$('.box').width()){
+							left = $(window).width()-$('.box').width();
+						}
+						if(top<0){
+							top=0;
+						}
+						else if(top>$(window).height()-$('.box').height()){
+							top = $(window).height()-$('.box').height();
+						}
+						$('.box').css('left',left);
+						$('.box').css('top',top);
+					});
+					$(document).mouseup(function(){
+						$(document).off();
+					});
+					return false;
+				})
+			})
+		</script>
+	</head>
+	<body>
+		<div class="box"></div>
+	</body>
+</html>
