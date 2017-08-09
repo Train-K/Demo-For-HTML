@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				width: 350px;
+				height: 350px;
+				background:url(small.jpg) no-repeat ;
+				background-size: 350px 350px;
+				border: 1px solid #000;
+				position: relative;
+				margin-left: 100px;
+				margin-top: 50px;
+				float: left;
+			}
+			#mask{
+				width: 175px;
+				height: 175px;
+				background-color: yellow;
+				opacity: 0.5;
+				position: absolute;
+				display: none;
+				cursor: move;
+
+			}
+			#right{
+				width: 400px;
+				height: 400px;
+				border: 1px solid #000; 
+				float: left;
+				margin-left: 100px;
+				display: none;
+				background: url(big.jpg) no-repeat;
+				background-size:800px 800px;
+				background-position: -200px -200px;
+			}
+		</style>
+		<script>
+			window.onload = function(){
+
+				var oBox = document.getElementById('box');
+				var oMask = document.getElementById('mask');
+				var oRight = document.getElementById('right');
+		
+				oBox.onmouseover = function(){
+					oMask.style.display = 'block';
+					oRight.style.display = 'block';
+					var e = window.event || e;
+					var nDisX = oMask.offsetWidth*0.5;
+					var nDisY = oMask.offsetHeight*0.5;
+									
+					document.onmousemove = function(e){
+						var e = window.event || e;
+						var left = e.clientX - nDisX-oBox.offsetLeft;
+						var top = e.clientY - nDisY-oBox.offsetTop;
+						if(left < 0){
+							left=0;
+						}
+						else if(left>oBox.offsetWidth-oMask.offsetWidth){
+							left = oBox.offsetWidth-oMask.offsetWidth-1;
+						}
+
+						if(top<0){
+							top=0;
+						}
+						else if(top>oBox.offsetHeight-oMask.offsetHeight){
+							top=oBox.offsetHeight-oMask.offsetHeight-1;
+						}
+						oMask.style.left = left + 'px';
+						oMask.style.top = top + 'px';
+						oRight.style.backgroundPosition = ''+-left*2+'px '+-top*2.4+'px';
+					}
+					oBox.onmouseout = function(){
+					oMask.style.display = 'none';
+					oRight.style.display = 'none';
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<div id="mask"></div>
+		</div>
+		<div id="right"></div>
+	</body>
+</html>
